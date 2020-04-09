@@ -1,0 +1,248 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "631667a07420ce3f77e3efd3b2a41f79",
+    "entities": [
+      {
+        "tableName": "CacheEntryEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `key` TEXT NOT NULL, `value` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PictureEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `color` TEXT NOT NULL, `description` TEXT, `location_city` TEXT, `location_country` TEXT, `location_position_latitude` REAL, `location_position_longitude` REAL, `urls_raw` TEXT, `urls_full` TEXT, `urls_regular` TEXT, `urls_small` TEXT, `urls_thumb` TEXT, `links_self` TEXT NOT NULL, `links_html` TEXT NOT NULL, `links_download` TEXT NOT NULL, `links_downloadLocation` TEXT NOT NULL, `user_id` TEXT NOT NULL, `user_username` TEXT NOT NULL, `user_name` TEXT NOT NULL, `user_portfolioUrl` TEXT, `user_links_self` TEXT NOT NULL, `user_links_html` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "width",
+            "columnName": "width",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.city",
+            "columnName": "location_city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.country",
+            "columnName": "location_country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.position.latitude",
+            "columnName": "location_position_latitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location.position.longitude",
+            "columnName": "location_position_longitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urls.raw",
+            "columnName": "urls_raw",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urls.full",
+            "columnName": "urls_full",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urls.regular",
+            "columnName": "urls_regular",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urls.small",
+            "columnName": "urls_small",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urls.thumb",
+            "columnName": "urls_thumb",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "links.self",
+            "columnName": "links_self",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "links.html",
+            "columnName": "links_html",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "links.download",
+            "columnName": "links_download",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "links.downloadLocation",
+            "columnName": "links_downloadLocation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user.id",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user.username",
+            "columnName": "user_username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user.name",
+            "columnName": "user_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user.portfolioUrl",
+            "columnName": "user_portfolioUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "user.links.self",
+            "columnName": "user_links_self",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user.links.html",
+            "columnName": "user_links_html",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "UnlockedPictureEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `pictureId` TEXT NOT NULL, `unlockedAt` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pictureId",
+            "columnName": "pictureId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unlockedAt",
+            "columnName": "unlockedAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '631667a07420ce3f77e3efd3b2a41f79')"
+    ]
+  }
+}

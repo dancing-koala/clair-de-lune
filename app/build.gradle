@@ -1,0 +1,78 @@
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.dancing_koala.lunedejour"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "UNSPLASH_ACCESS_KEY", "$unsplashAccessKey"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "androidx.annotation:annotation:$androidx_annotation"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat"
+    implementation "androidx.cardview:cardview:$androidx_cardview"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout"
+    implementation "androidx.core:core-ktx:$androidx_core_ktx"
+    implementation "androidx.fragment:fragment-ktx:$androidx_fragment_ktx"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle"
+    implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview"
+    implementation "androidx.room:room-runtime:$androidx_room_version"
+    implementation "androidx.room:room-ktx:$androidx_room_version"
+
+    implementation 'com.beust:klaxon:5.0.1'
+
+    implementation "com.squareup.okhttp3:okhttp:$squareup_okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$squareup_okhttp_logging"
+    implementation "com.squareup.retrofit2:retrofit:$squareup_retrofit"
+
+    implementation "io.coil-kt:coil:0.9.5"
+
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_generic_jvm"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+
+    kapt "androidx.room:room-compiler:$androidx_room_version"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:3.3.3"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_test_espresso"
+}
