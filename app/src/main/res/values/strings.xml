@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Clair De Lune</string>
 
-    <string name="home_imageview_content_description">Today\'s moon picture</string>
+    <string name="home_imageview_content_description">La lune du jour</string>
+    <string name="home_bottom_title_template">Par \@%s</string>
+    <string name="three_dots">…</string>
 
     <string-array name="picture_curated_ids">
         <item>Qd688l1yDOI</item>

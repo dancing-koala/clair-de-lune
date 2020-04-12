@@ -1,7 +1,11 @@
 package com.dancing_koala.clairdelune.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -14,6 +18,7 @@ import com.dancing_koala.clairdelune.R
 import com.dancing_koala.clairdelune.android.hide
 import com.dancing_koala.clairdelune.android.show
 import com.dancing_koala.clairdelune.viewmodel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_home.*
 
 /**
@@ -42,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private var isFullScreen: Boolean = false
-    private val hideRunnable = Runnable { hide() }
+    private val hideRunnable = Runnable { hideUI() }
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -58,6 +63,8 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
+        homePictureTitle.setOnClickListener { viewModel.onUserNameClick() }
+
         homeMainImageView.setOnTouchListener { view, event ->
             gestureDetector.onTouchEvent(event)
             imageMatrixTouchHandler.onTouch(view, event)
@@ -68,53 +75,64 @@ class HomeActivity : AppCompatActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         isFullScreen = true
-        delayedHide(100L)
+//        delayedHide(100L)
 
         viewModel.viewStateLiveData.observe(this, Observer {
             when (it) {
-                HomeViewModel.ViewState.Loading      -> showLoading()
-                is HomeViewModel.ViewState.ShowImage -> showImage(it.imageUrl)
+                HomeViewModel.ViewState.Loading                  -> showLoading()
+                is HomeViewModel.ViewState.ShowImage             -> showImage(it.imageUrl)
+                is HomeViewModel.ViewState.ShowUserName          -> showUserName(it.userName)
+                is HomeViewModel.ViewState.ShowErrorMessage      -> showError(it.message)
+                is HomeViewModel.ViewState.ShowUserProfileScreen -> showUserProfile(it.userProfileUrl)
             }
         })
     }
+
+    private fun showUserProfile(userProfileUrl: String) {
+        startActivity(
+            Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(userProfileUrl) }
+        )
+    }
+
+    private fun showUserName(userName: String) {
+        val underlineSpan = UnderlineSpan()
+        val spannable = SpannableString(getString(R.string.home_bottom_title_template, userName))
+        spannable.setSpan(underlineSpan, spannable.length - userName.length - 1, spannable.length, 0)
+        homePictureTitle.text = spannable
+    }
+
+    private fun showError(message: String) =
+        Snackbar.make(homeRootContainer, message, Snackbar.LENGTH_LONG).show()
 
     override fun onStart() {
         super.onStart()
         viewModel.start()
     }
 
-    private fun showLoading() {
-        homeLoadingIndicator.show()
-    }
+    private fun showLoading() = homeLoadingIndicator.show()
 
-    private fun hideLoading() {
-        homeLoadingIndicator.hide()
-    }
+    private fun hideLoading() = homeLoadingIndicator.hide()
 
     private fun showImage(url: String) {
         hideLoading()
         homeMainImageView.load(url)
     }
 
-    private fun toggle() = if (isFullScreen) hide() else show()
+    private fun toggle() = if (isFullScreen) hideUI() else showUI()
 
-    private fun hide() {
-        // Hide UI first
+    private fun hideUI() {
         homeToolbar.visibility = View.GONE
         homeBottomToolbar.visibility = View.GONE
         isFullScreen = false
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
         hideHandler.removeCallbacks(showTopPart)
         hideHandler.postDelayed(hideTopPartRunnable, UI_ANIMATION_DELAY)
     }
 
-    private fun show() {
-        // Show the system bar
+    private fun showUI() {
         homeMainImageView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         isFullScreen = true
 
-        // Schedule a runnable to display UI elements after a delay
         hideHandler.removeCallbacks(hideTopPartRunnable)
         hideHandler.postDelayed(showTopPart, UI_ANIMATION_DELAY)
     }

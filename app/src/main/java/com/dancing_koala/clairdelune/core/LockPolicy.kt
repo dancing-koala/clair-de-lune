@@ -1,9 +1,9 @@
-package com.dancing_koala.clairdelune.data
+package com.dancing_koala.clairdelune.core
 
 import java.util.*
 
 object LockPolicy {
-    private const val unlockHour = 5
+    private const val unlockHour = 4
 
     fun setCalendarToUnlockTime(calendar: Calendar) {
         calendar.apply {

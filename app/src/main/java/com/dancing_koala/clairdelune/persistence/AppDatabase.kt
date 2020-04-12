@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.dancing_koala.clairdelune.R
-import com.dancing_koala.clairdelune.data.LockPolicy
+import com.dancing_koala.clairdelune.core.LockPolicy
 import com.dancing_koala.clairdelune.persistence.dao.CacheEntryDao
 import com.dancing_koala.clairdelune.persistence.dao.LockDao
 import com.dancing_koala.clairdelune.persistence.dao.PictureDao

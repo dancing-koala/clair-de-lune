@@ -1,5 +1,6 @@
 package com.dancing_koala.clairdelune.data
 
+import com.dancing_koala.clairdelune.core.LockPolicy
 import com.dancing_koala.clairdelune.core.Lock
 import com.dancing_koala.clairdelune.persistence.dao.LockDao
 import kotlinx.coroutines.Dispatchers

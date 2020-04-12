@@ -14,5 +14,5 @@ class KlaxonJsonParser : JsonParser {
         klaxon.parse<ApiPicture>(rawJson)
 
     override fun parseApiPhotoInfoList(rawJson: String): List<ApiPicture> =
-        klaxon.parseArray<ApiPicture>(rawJson) ?: listOf()
+        klaxon.parseArray(rawJson) ?: listOf()
 }

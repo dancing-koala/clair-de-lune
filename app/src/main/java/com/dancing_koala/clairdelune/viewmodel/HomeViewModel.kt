@@ -34,6 +34,11 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 _viewStateLiveData.value = ViewState.ShowImage(
                     lockWithPicture.picture.urls.getBestNonNullUrl()
                 )
+                _viewStateLiveData.value = ViewState.ShowUserName(
+                    lockWithPicture.picture.user.username
+                )
+            } else {
+                _viewStateLiveData.value = ViewState.ShowErrorMessage("Une erreur est survenue")
             }
         }
     }
@@ -47,9 +52,19 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         else            -> ""
     }
 
+    fun onUserNameClick() {
+        if (::lockWithPicture.isInitialized) {
+            _viewStateLiveData.value = ViewState.ShowUserProfileScreen(
+                lockWithPicture.picture.user.links.html
+            )
+        }
+    }
+
     sealed class ViewState {
         object Loading : ViewState()
         class ShowImage(val imageUrl: String) : ViewState()
+        class ShowUserName(val userName: String) : ViewState()
         class ShowErrorMessage(val message: String) : ViewState()
+        class ShowUserProfileScreen(val userProfileUrl: String) : ViewState()
     }
 }

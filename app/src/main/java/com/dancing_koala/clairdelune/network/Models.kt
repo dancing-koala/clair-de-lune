@@ -17,14 +17,14 @@ data class ApiPicture(
 )
 
 data class ApiLocation(
-    val city: String,
-    val country: String,
-    val position: ApiPosition
+    val city: String?,
+    val country: String?,
+    val position: ApiPosition?
 )
 
 data class ApiPosition(
-    val latitude: Double,
-    val longitude: Double
+    val latitude: Double?,
+    val longitude: Double?
 )
 
 data class ApiUrls(

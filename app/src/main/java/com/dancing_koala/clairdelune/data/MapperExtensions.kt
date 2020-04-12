@@ -48,7 +48,7 @@ fun Picture.toEntity() = PictureEntity(
 fun Location.toEntity() = LocationEntity(
     city = city,
     country = country,
-    position = position.toEntity()
+    position = position?.toEntity()
 )
 
 fun Position.toEntity() = PositionEntity(
@@ -100,7 +100,7 @@ fun PictureEntity.toDataModel() = Picture(
 fun LocationEntity.toDataModel() = Location(
     city = city,
     country = country,
-    position = position.toDataModel()
+    position = position?.toDataModel()
 )
 
 fun PositionEntity.toDataModel() = Position(
@@ -152,7 +152,7 @@ fun ApiPicture.toDataModel() = Picture(
 fun ApiLocation.toDataModel() = Location(
     city = city,
     country = country,
-    position = position.toDataModel()
+    position = position?.toDataModel()
 )
 
 fun ApiPosition.toDataModel() = Position(

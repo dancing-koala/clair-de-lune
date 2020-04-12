@@ -20,9 +20,9 @@ data class Picture(
     val user: User
 )
 
-data class Location(val city: String, val country: String, val position: Position)
+data class Location(val city: String?, val country: String?, val position: Position?)
 
-data class Position(val latitude: Double, val longitude: Double)
+data class Position(val latitude: Double?, val longitude: Double?)
 
 data class Urls(
     val raw: String?,

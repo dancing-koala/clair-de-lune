@@ -40,15 +40,15 @@ data class PictureEntity(
 )
 
 data class LocationEntity(
-    val city: String,
-    val country: String,
+    val city: String?,
+    val country: String?,
     @Embedded(prefix = "position_")
-    val position: PositionEntity
+    val position: PositionEntity?
 )
 
 data class PositionEntity(
-    val latitude: Double,
-    val longitude: Double
+    val latitude: Double?,
+    val longitude: Double?
 )
 
 data class UrlsEntity(
