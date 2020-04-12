@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.dancing_koala.lunedejour"
+        applicationId "com.dancing_koala.clairdelune"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
@@ -59,6 +59,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$squareup_okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$squareup_okhttp_logging"
     implementation "com.squareup.retrofit2:retrofit:$squareup_retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$squareup_retrofit"
 
     implementation "io.coil-kt:coil:0.9.5"
 

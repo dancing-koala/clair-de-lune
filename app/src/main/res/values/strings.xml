@@ -1,16 +1,101 @@
 <resources>
-    <string name="app_name">Lune De Jour</string>
+    <string name="app_name">Clair De Lune</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="home_imageview_content_description">Today\'s moon picture</string>
+
+    <string-array name="picture_curated_ids">
+        <item>Qd688l1yDOI</item>
+        <item>DdoXpQXobQs</item>
+        <item>ve_uN9V8xqU</item>
+        <item>4zxSWESyZio</item>
+        <item>TMnUYARPV1A</item>
+        <item>FWOmuvSdlLk</item>
+        <item>RbWe2tBKCBk</item>
+        <item>wNSWuIjkD1I</item>
+        <item>HmzdWOgWVYE</item>
+        <item>94PnoFB0t94</item>
+        <item>6msS8vT5pzw</item>
+        <item>IOSkeOlUpI8</item>
+        <item>VgWmgw4BDdY</item>
+        <item>sYmdVhPV-sY</item>
+        <item>xB_EVIPboJA</item>
+        <item>ZWrQd1G5jbY</item>
+        <item>r0WXBtwI2Eo</item>
+        <item>f3ITqoZOP6E</item>
+        <item>AncdL_sBVlw</item>
+        <item>a5Vu31EHKT4</item>
+        <item>_YBE-FcRBYc</item>
+        <item>Z0V_Xn-FIRs</item>
+        <item>4WvB4DVFM6Q</item>
+        <item>wLGWh-CkrqY</item>
+        <item>NzEGFPNriCM</item>
+        <item>yAHIP-pVi9U</item>
+        <item>beWCKQeatXY</item>
+        <item>vmTZW2FNvP8</item>
+        <item>a2jYbeKvxPw</item>
+        <item>gxCFOgUrT-Q</item>
+        <item>a1GsOy8d-5I</item>
+        <item>g5pJaXMN_b4</item>
+        <item>1ETuIhqWPic</item>
+        <item>B9xPmhxQfN4</item>
+        <item>BOCppro_HsU</item>
+        <item>YuNl5xei5wA</item>
+        <item>arqV7EvCt8k</item>
+        <item>lY-QlIzHrTA</item>
+        <item>j2MBW1lhSPo</item>
+        <item>cdc35Juktik</item>
+        <item>vWBKt9Dto1g</item>
+        <item>y1M0dZ-1Psc</item>
+        <item>LdhN3w9vjhk</item>
+        <item>vnPNYTSLEk4</item>
+        <item>Q0gHmbaYeZQ</item>
+        <item>1T6IoZ9ZmQ8</item>
+        <item>kforNjC1RH4</item>
+        <item>WpZmGDzOAi0</item>
+        <item>LIyiCvwXebs</item>
+        <item>eWD4O1Me4rM</item>
+        <item>Wf0v6Z2RRjI</item>
+        <item>6WrFRLzm4WE</item>
+        <item>Xlz_Wsse4p8</item>
+        <item>IJIZOHj8zWc</item>
+        <item>qCoXJhVtVTE</item>
+        <item>f5ukxL5Ezgw</item>
+        <item>aFMsnhkZoJg</item>
+        <item>ft4cDSysqoU</item>
+        <item>_Jk7VbPHoYo</item>
+        <item>G_wyX8GOJJY</item>
+        <item>0xYjdK5kRxM</item>
+        <item>JD1DQZ0mSio</item>
+        <item>leaQSyiO32g</item>
+        <item>9kbsq91NFwg</item>
+        <item>Hfo98iqJ8jA</item>
+        <item>96HGASDzrW8</item>
+        <item>qmWp7NFmIaI</item>
+        <item>hFGafl39tg8</item>
+        <item>3OS_gppenAc</item>
+        <item>l3a0dWStrQw</item>
+        <item>IlzqPzI7UpU</item>
+        <item>GFWxBcxzFXE</item>
+        <item>uh9WQOJzizg</item>
+        <item>BMLlMbOEZtg</item>
+        <item>AGRWILIJDLQ</item>
+        <item>O0Jhotf93Uc</item>
+        <item>O3alySng8h4</item>
+        <item>VrfyJ45UL3o</item>
+        <item>qIRJeKdieKA</item>
+        <item>vPPcIgkS4XU</item>
+        <item>OGFrLpQ_hiI</item>
+        <item>eR_z7zNPC5M</item>
+        <item>tUQdcirGekk</item>
+        <item>o3HW1XZpomA</item>
+        <item>ynBT8zVu9_M</item>
+        <item>TFth26tEjss</item>
+        <item>-TB5K8VZ3hw</item>
+        <item>8heQ-UCTgaQ</item>
+        <item>vs4RuzbDc20</item>
+        <item>6XJyTDfYuN8</item>
+        <item>pVHGebfgVf0</item>
+        <item>R7cwSEv7pC4</item>
+        <item>RwDPvKEM5Is</item>
+    </string-array>
 </resources>
