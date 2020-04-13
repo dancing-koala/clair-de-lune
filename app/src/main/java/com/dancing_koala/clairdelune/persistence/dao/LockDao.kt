@@ -11,7 +11,7 @@ interface LockDao {
     @Query("SELECT * FROM LockEntity WHERE unlockedAt = :unlockedAt LIMIT 1")
     suspend fun findUnlockedAt(unlockedAt: Long): LockEntity?
 
-    @Query("SELECT * FROM LockEntity WHERE unlockedAt <= :unlockedAt")
+    @Query("SELECT * FROM LockEntity WHERE unlockedAt <= :unlockedAt ORDER BY unlockedAt DESC")
     suspend fun findAllUnlockedUpTo(unlockedAt: Long): List<LockEntity>
 
     @Update

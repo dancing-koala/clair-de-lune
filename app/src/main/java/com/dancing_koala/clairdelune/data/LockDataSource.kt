@@ -1,7 +1,7 @@
 package com.dancing_koala.clairdelune.data
 
-import com.dancing_koala.clairdelune.core.LockPolicy
 import com.dancing_koala.clairdelune.core.Lock
+import com.dancing_koala.clairdelune.core.LockPolicy
 import com.dancing_koala.clairdelune.persistence.dao.LockDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -38,6 +38,8 @@ class LocalLockDataSource(
             if (LockPolicy.isTooEarly(it)) {
                 it.add(Calendar.DAY_OF_MONTH, -1)
             }
+
+            it.add(Calendar.DAY_OF_MONTH, 10)
 
             LockPolicy.setCalendarToUnlockTime(it)
             it.time.time

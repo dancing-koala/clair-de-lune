@@ -5,8 +5,6 @@
     android:id="@+id/homeRootContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
-    tools:background="@android:color/white"
     tools:context=".ui.HomeActivity">
 
     <ImageView
@@ -17,17 +15,24 @@
         android:keepScreenOn="true"
         android:scaleType="centerInside" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:fitsSystemWindows="true">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/homeMainUIGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="homeToolbar,homeBottomToolbar,homePictureListRecyclerView,homePictureListArrow" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/homeToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_bottom"
+            app:layout_constraintTop_toTopOf="parent"
             app:title="@string/app_name" />
 
         <ProgressBar
@@ -35,7 +40,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:progressTint="@color/primaryTextColor" />
+            android:progressTint="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/homePictureListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toTopOf="@id/homeBottomToolbar"
+            tools:layout_height="150dp"
+            tools:listitem="@layout/item_picture_archive" />
+
+        <ImageView
+            android:id="@+id/homePictureListArrow"
+            android:layout_width="@dimen/home_picture_list_arrow_size"
+            android:layout_height="@dimen/home_picture_list_arrow_size"
+            android:src="@drawable/arrow_down"
+            android:tint="@color/secondaryDarkColor"
+            app:layout_constraintBottom_toTopOf="@id/homePictureListRecyclerView"
+            app:layout_constraintEnd_toEndOf="@id/homePictureListRecyclerView"
+            app:layout_constraintStart_toStartOf="@id/homePictureListRecyclerView"
+            app:layout_constraintTop_toTopOf="@id/homePictureListRecyclerView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/homeBottomToolbar"
@@ -43,7 +73,8 @@
             android:layout_height="@dimen/home_bottom_bar_height"
             android:layout_gravity="bottom"
             android:background="@drawable/bg_rounded_top"
-            android:paddingHorizontal="@dimen/base_margin">
+            android:paddingHorizontal="@dimen/base_margin"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/homePictureTitle"
@@ -58,18 +89,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/homeArchiveButton"
-                style="@style/Widget.AppCompat.ActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_view_module_black"
-                android:tint="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="@id/homePictureTitle"
-                app:layout_constraintEnd_toStartOf="@id/homeInfoButton"
-                app:layout_constraintTop_toTopOf="@id/homePictureTitle" />
 
             <ImageButton
                 android:id="@+id/homeInfoButton"
@@ -97,6 +116,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

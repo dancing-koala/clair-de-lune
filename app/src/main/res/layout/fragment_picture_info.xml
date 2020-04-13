@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blackOverlay"
+    app:cardCornerRadius="@dimen/base_card_corner_radius">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blackOverlay"
+        android:columnCount="1"
+        android:orientation="vertical"
+        android:padding="@dimen/base_margin_l"
+        android:useDefaultMargins="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha=".7"
+            android:text="@string/picture_info_picture_section_title"
+            android:textAllCaps="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/pictureInfoSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin_xs"
+            android:text="Taille: ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoCreationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajoutée le: ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description: ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lieu: ???, ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoWebAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/picture_info_see_online" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin_xl"
+            android:alpha=".7"
+            android:text="@string/picture_info_user_section_title"
+            android:textAllCaps="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/pictureInfoUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pseudo: ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoUserFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nom: ???" />
+
+        <TextView
+            android:id="@+id/pictureInfoUserPortfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voir le portfolio" />
+
+        <TextView
+            android:id="@+id/pictureInfoUserWebAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/picture_info_see_online" />
+
+    </GridLayout>
+</androidx.cardview.widget.CardView>

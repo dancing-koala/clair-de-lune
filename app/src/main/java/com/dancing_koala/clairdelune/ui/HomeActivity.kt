@@ -7,38 +7,52 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler
 import com.dancing_koala.clairdelune.R
-import com.dancing_koala.clairdelune.android.hide
-import com.dancing_koala.clairdelune.android.show
+import com.dancing_koala.clairdelune.android.*
+import com.dancing_koala.clairdelune.core.LockWithPicture
 import com.dancing_koala.clairdelune.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.item_picture_archive.view.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class HomeActivity : AppCompatActivity() {
     companion object {
         private const val UI_ANIMATION_DELAY = 300L
     }
 
+    private val dateFormatter = SimpleDateFormat("dd/MM/YYYY", Locale.ROOT)
     private val hideHandler = Handler()
     private var isFullScreen: Boolean = false
     private val hideRunnable = Runnable { hideUI() }
 
     private val viewModel: HomeViewModel by viewModels()
 
+    private val linearSnapHelper = LinearSnapHelper()
+
     private val imageMatrixTouchHandler by lazy { ImageMatrixTouchHandler(this) }
+    private val gestureDetector by lazy {
+        GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+                toggle()
+                return true
+            }
+        })
+    }
 
     private val hideTopPartRunnable = Runnable {
         homeMainImageView.systemUiVisibility =
@@ -50,8 +64,13 @@ class HomeActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
     private val showTopPart = Runnable {
-        homeToolbar.visibility = View.VISIBLE
-        homeBottomToolbar.visibility = View.VISIBLE
+        homeMainUIGroup.show()
+    }
+
+    private val onSnapPositionChangeListener = object : SnapOnScrollListener.OnSnapPositionChangeListener {
+        override fun onSnapPositionChange(newPosition: Int) {
+            viewModel.onNewPictureSelected(newPosition)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,44 +79,43 @@ class HomeActivity : AppCompatActivity() {
 
         homePictureTitle.setOnClickListener { viewModel.onUserNameClick() }
         homeDownloadButton.setOnClickListener { viewModel.onDownloadButtonClick() }
+        homeInfoButton.setOnClickListener { viewModel.onInfoButtonClick() }
 
-        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-                toggle()
-                return true
-            }
-        })
-
-        homeMainImageView.setOnTouchListener { view, event ->
-            gestureDetector.onTouchEvent(event)
-            imageMatrixTouchHandler.onTouch(view, event)
-            true
-        }
+        homePictureListRecyclerView.addItemDecoration(
+            SpacingItemDecoration(resources.getDimensionPixelSize(R.dimen.base_margin_xs))
+        )
+        linearSnapHelper.attachToRecyclerView(homePictureListRecyclerView)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         isFullScreen = true
-//        delayedHide(100L)
 
         viewModel.viewStateLiveData.observe(this, Observer {
             when (it) {
                 HomeViewModel.ViewState.Loading                  -> showLoading()
-                is HomeViewModel.ViewState.ShowImage             -> showImage(it.imageUrl)
-                is HomeViewModel.ViewState.ShowUserName          -> showUserName(it.userName)
                 is HomeViewModel.ViewState.ShowErrorMessage      -> showError(it.message)
                 is HomeViewModel.ViewState.ShowUserProfileScreen -> showUserProfile(it.userProfileUrl)
                 is HomeViewModel.ViewState.ShowMessage           -> showMessage(it.message)
+                HomeViewModel.ViewState.ShowInfoScreen           -> showInfoScreen()
             }
         })
+
+        viewModel.selectedLockWithPictureLiveData.observe(this, Observer {
+            showImage(it.picture.urls.getBestNonNullUrl())
+            showUserName(it.picture.user.username)
+        })
+
+        viewModel.lockWithPictureListLiveData.observe(this, Observer {
+            showPictureItems(it.map { item -> item.toPictureItem() })
+        })
+
+        delayedHide(150L)
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.start()
-
-        homeMainImageView.imageMatrix = Matrix()
-        homeMainImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
 
     private fun showUserProfile(userProfileUrl: String) {
@@ -124,15 +142,25 @@ class HomeActivity : AppCompatActivity() {
     private fun hideLoading() = homeLoadingIndicator.hide()
 
     private fun showImage(url: String) {
-        hideLoading()
-        homeMainImageView.load(url)
+        showLoading()
+        homeMainImageView.imageMatrix = Matrix()
+        homeMainImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        homeMainImageView.load(url) {
+            listener { _, _ ->
+                homeMainImageView.setOnTouchListener { view, event ->
+                    gestureDetector.onTouchEvent(event)
+                    imageMatrixTouchHandler.onTouch(view, event)
+                    true
+                }
+                hideLoading()
+            }
+        }
     }
 
     private fun toggle() = if (isFullScreen) hideUI() else showUI()
 
     private fun hideUI() {
-        homeToolbar.visibility = View.GONE
-        homeBottomToolbar.visibility = View.GONE
+        homeMainUIGroup.hide()
         isFullScreen = false
 
         hideHandler.removeCallbacks(showTopPart)
@@ -150,5 +178,78 @@ class HomeActivity : AppCompatActivity() {
     private fun delayedHide(delayMillis: Long) {
         hideHandler.removeCallbacks(hideRunnable)
         hideHandler.postDelayed(hideRunnable, delayMillis)
+    }
+
+    private fun showInfoScreen() {
+        PictureInfoDialogFragment.newInstance().show(supportFragmentManager, "Picture Info")
+    }
+
+    private fun showPictureItems(items: List<PictureItem>) {
+        if (items.size < 2) {
+            homePictureListRecyclerView.layoutManager = null
+            homePictureListRecyclerView.adapter = null
+            (homePictureListRecyclerView.parent as ViewGroup).apply {
+                removeView(homePictureListRecyclerView)
+                removeView(homePictureListArrow)
+            }
+            homeMainUIGroup.referencedIds = homeMainUIGroup.referencedIds.filter {
+                it != R.id.homePictureListRecyclerView || it != R.id.homePictureListArrow
+            }.toIntArray()
+            return
+        }
+
+        homePictureListRecyclerView.apply {
+            layoutManager = CenteredLayoutManager(this@HomeActivity, this.width, resources.getDimensionPixelSize(R.dimen.picture_item_height))
+            adapter = ItemAdapter(items)
+            addOnScrollListener(
+                SnapOnScrollListener(
+                    linearSnapHelper,
+                    SnapOnScrollListener.Behavior.NOTIFY_ON_STATE_IDLE,
+                    onSnapPositionChangeListener
+                )
+            )
+            lifecycleScope.launch {
+                // Workaround for a discrepency between CenteredLayoutManager & SnapHelper
+                delay(100)
+                fling(-minFlingVelocity, 0)
+            }
+        }
+    }
+
+    private fun humanizeDate(date: Date): String =
+        dateFormatter.format(date)
+
+    private fun LockWithPicture.toPictureItem(): PictureItem =
+        PictureItem(
+            itemId = picture.id,
+            pictureUrl = picture.urls.small!!,
+            pictureDownloadUrl = picture.links.download,
+            unlockedDateHumanized = humanizeDate(Date(lock.unlockedAt!!))
+        )
+
+    private data class PictureItem(
+        val itemId: String,
+        val pictureUrl: String,
+        val pictureDownloadUrl: String,
+        val unlockedDateHumanized: String
+    )
+
+    private class ItemAdapter(private val data: List<PictureItem>) : RecyclerView.Adapter<ItemAdapter.Holder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
+            Holder(LayoutInflater.from(parent.context).inflate(R.layout.item_picture_archive, parent, false))
+
+        override fun getItemCount(): Int = data.size
+
+        override fun onBindViewHolder(holder: Holder, position: Int) {
+            with(data[position]) {
+                holder.image.load(pictureUrl)
+                holder.unlockDate.text = unlockedDateHumanized
+            }
+        }
+
+        class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val image: ImageView = itemView.itemPictureArchiveImage
+            val unlockDate: TextView = itemView.itemPictureArchiveUnlockDate
+        }
     }
 }

@@ -30,7 +30,15 @@ data class Urls(
     val regular: String?,
     val small: String?,
     val thumb: String?
-)
+) {
+    fun getBestNonNullUrl(): String = when {
+        full != null    -> full
+        regular != null -> regular
+        small != null   -> small
+        thumb != null   -> thumb
+        else            -> ""
+    }
+}
 
 data class Links(
     val self: String,

@@ -6,6 +6,10 @@
     <string name="three_dots">…</string>
     <string name="download_picture_description">Téléchargement de l\'image</string>
     <string name="home_unknown_user">Par ???</string>
+    <string name="question_marks">\???</string>
+    <string name="picture_info_user_section_title">Artiste</string>
+    <string name="picture_info_picture_section_title">Image</string>
+    <string name="picture_info_see_online">Voir sur le site</string>
 
     <string-array name="picture_curated_ids">
         <item>Qd688l1yDOI</item>
