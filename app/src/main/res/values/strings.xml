@@ -4,6 +4,7 @@
     <string name="home_imageview_content_description">La lune du jour</string>
     <string name="home_bottom_title_template">Par \@%s</string>
     <string name="three_dots">…</string>
+    <string name="download_picture_description">Téléchargement de l\'image</string>
 
     <string-array name="picture_curated_ids">
         <item>Qd688l1yDOI</item>

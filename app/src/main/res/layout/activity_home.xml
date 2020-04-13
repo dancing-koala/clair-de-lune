@@ -60,6 +60,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+                android:id="@+id/homeArchiveButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_view_module_black"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@id/homePictureTitle"
+                app:layout_constraintEnd_toStartOf="@id/homeInfoButton"
+                app:layout_constraintTop_toTopOf="@id/homePictureTitle" />
+
+            <ImageButton
                 android:id="@+id/homeInfoButton"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_width="wrap_content"

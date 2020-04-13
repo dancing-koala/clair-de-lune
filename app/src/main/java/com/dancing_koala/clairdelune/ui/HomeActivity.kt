@@ -1,6 +1,7 @@
 package com.dancing_koala.clairdelune.ui
 
 import android.content.Intent
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.text.style.UnderlineSpan
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,6 +33,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val hideHandler = Handler()
+    private var isFullScreen: Boolean = false
+    private val hideRunnable = Runnable { hideUI() }
+
+    private val viewModel: HomeViewModel by viewModels()
+
+    private val imageMatrixTouchHandler by lazy { ImageMatrixTouchHandler(this) }
 
     private val hideTopPartRunnable = Runnable {
         homeMainImageView.systemUiVisibility =
@@ -46,24 +54,19 @@ class HomeActivity : AppCompatActivity() {
         homeBottomToolbar.visibility = View.VISIBLE
     }
 
-    private var isFullScreen: Boolean = false
-    private val hideRunnable = Runnable { hideUI() }
-
-    private val viewModel: HomeViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val imageMatrixTouchHandler = ImageMatrixTouchHandler(this)
+        homePictureTitle.setOnClickListener { viewModel.onUserNameClick() }
+        homeDownloadButton.setOnClickListener { viewModel.onDownloadButtonClick() }
+
         val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
                 toggle()
                 return true
             }
         })
-
-        homePictureTitle.setOnClickListener { viewModel.onUserNameClick() }
 
         homeMainImageView.setOnTouchListener { view, event ->
             gestureDetector.onTouchEvent(event)
@@ -88,6 +91,14 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.start()
+
+        homeMainImageView.imageMatrix = Matrix()
+        homeMainImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    }
+
     private fun showUserProfile(userProfileUrl: String) {
         startActivity(
             Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(userProfileUrl) }
@@ -103,11 +114,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showError(message: String) =
         Snackbar.make(homeRootContainer, message, Snackbar.LENGTH_LONG).show()
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.start()
-    }
 
     private fun showLoading() = homeLoadingIndicator.show()
 

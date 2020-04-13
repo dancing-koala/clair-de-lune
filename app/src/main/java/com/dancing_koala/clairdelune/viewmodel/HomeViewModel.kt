@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dancing_koala.clairdelune.android.AppDownloadManager
 import com.dancing_koala.clairdelune.android.BaseViewModel
 import com.dancing_koala.clairdelune.core.LockWithPicture
 import com.dancing_koala.clairdelune.core.Result
@@ -22,6 +23,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     private val lockWithPictureDataSource: LockWithPictureDataSource by kodein.instance()
 
     private lateinit var lockWithPicture: LockWithPicture
+
+    private val appDownloadManager by lazy {
+        AppDownloadManager(application)
+    }
 
     fun start() {
         _viewStateLiveData.value = ViewState.Loading
@@ -56,6 +61,16 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         if (::lockWithPicture.isInitialized) {
             _viewStateLiveData.value = ViewState.ShowUserProfileScreen(
                 lockWithPicture.picture.user.links.html
+            )
+        }
+    }
+
+    fun onDownloadButtonClick() {
+        if (::lockWithPicture.isInitialized) {
+            val fileName = "ClaireDeLune-${lockWithPicture.picture.id}"
+            appDownloadManager.downloadFile(
+                lockWithPicture.picture.links.download,
+                fileName
             )
         }
     }
