@@ -87,6 +87,7 @@ class HomeActivity : AppCompatActivity() {
                 is HomeViewModel.ViewState.ShowUserName          -> showUserName(it.userName)
                 is HomeViewModel.ViewState.ShowErrorMessage      -> showError(it.message)
                 is HomeViewModel.ViewState.ShowUserProfileScreen -> showUserProfile(it.userProfileUrl)
+                is HomeViewModel.ViewState.ShowMessage           -> showMessage(it.message)
             }
         })
     }
@@ -113,6 +114,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showError(message: String) =
+        Snackbar.make(homeRootContainer, message, Snackbar.LENGTH_LONG).show()
+
+    private fun showMessage(message: String) =
         Snackbar.make(homeRootContainer, message, Snackbar.LENGTH_LONG).show()
 
     private fun showLoading() = homeLoadingIndicator.show()

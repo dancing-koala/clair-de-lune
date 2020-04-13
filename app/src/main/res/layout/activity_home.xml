@@ -53,7 +53,7 @@
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingEnd="@dimen/base_margin"
-                android:text="@string/three_dots"
+                android:text="@string/home_unknown_user"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

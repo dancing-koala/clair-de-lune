@@ -68,10 +68,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     fun onDownloadButtonClick() {
         if (::lockWithPicture.isInitialized) {
             val fileName = "ClaireDeLune-${lockWithPicture.picture.id}"
-            appDownloadManager.downloadFile(
-                lockWithPicture.picture.links.download,
-                fileName
-            )
+            appDownloadManager.downloadFile(lockWithPicture.picture.links.download, fileName)
+            _viewStateLiveData.value = ViewState.ShowMessage("Téléchargement de l'image lancé  ❤️")
         }
     }
 
@@ -80,6 +78,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         class ShowImage(val imageUrl: String) : ViewState()
         class ShowUserName(val userName: String) : ViewState()
         class ShowErrorMessage(val message: String) : ViewState()
+        class ShowMessage(val message: String) : ViewState()
         class ShowUserProfileScreen(val userProfileUrl: String) : ViewState()
     }
 }
