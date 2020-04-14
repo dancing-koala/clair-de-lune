@@ -26,10 +26,15 @@ class App : Application() {
         private const val CODE_NOTIFICATION_SERVICE = 603
 
         fun configureAlarmManager(context: Context) {
+            val currentTime = Calendar.getInstance().timeInMillis
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, 8)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
+            }
+
+            if (currentTime > calendar.timeInMillis) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
             }
 
             val intent = Intent(context, NotificationService::class.java)
