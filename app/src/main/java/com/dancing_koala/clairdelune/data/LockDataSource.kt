@@ -40,6 +40,6 @@ class LocalLockDataSource(
             }
 
             LockPolicy.setCalendarToUnlockTime(it)
-            it.time.time
+            it.timeInMillis
         }
 }

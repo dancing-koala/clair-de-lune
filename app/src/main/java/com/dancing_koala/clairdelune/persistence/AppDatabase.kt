@@ -29,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         for (id in curatedIds) {
             queryStringBuilder
-                .append("(\"$id\", ${calendar.time.time}, 0)")
+                .append("(\"$id\", ${calendar.timeInMillis}, 0)")
                 .append(",")
 
             calendar.add(Calendar.DAY_OF_MONTH, 1)

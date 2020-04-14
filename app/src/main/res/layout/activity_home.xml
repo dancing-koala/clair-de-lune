@@ -31,7 +31,7 @@
             android:id="@+id/homeToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_bottom"
+            android:background="@color/blackOverlay"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/app_name" />
 

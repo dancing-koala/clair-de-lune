@@ -22,13 +22,13 @@ class LocalCacheDataSource(
     }
 
     override suspend fun put(key: String, value: String) = withContext(Dispatchers.IO) {
-        val timestamp = Calendar.getInstance().time.time
+        val timestamp = Calendar.getInstance().timeInMillis
         cacheEntryDao.insert(CacheEntryEntity(0, key, value, timestamp))
     }
 
     override suspend fun put(cacheEntry: CacheEntry) = withContext(Dispatchers.IO) {
         val entity = if (cacheEntry.createdAt == 0L) {
-            val timestamp = Calendar.getInstance().time.time
+            val timestamp = Calendar.getInstance().timeInMillis
             cacheEntry.copy(createdAt = timestamp)
         } else {
             cacheEntry

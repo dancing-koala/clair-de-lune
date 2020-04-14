@@ -19,7 +19,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler
 import com.dancing_koala.clairdelune.R
-import com.dancing_koala.clairdelune.android.*
+import com.dancing_koala.clairdelune.android.SnapOnScrollListener
+import com.dancing_koala.clairdelune.android.SpacingItemDecoration
+import com.dancing_koala.clairdelune.android.view.CenteredLayoutManager
+import com.dancing_koala.clairdelune.android.view.hide
+import com.dancing_koala.clairdelune.android.view.show
 import com.dancing_koala.clairdelune.core.LockWithPicture
 import com.dancing_koala.clairdelune.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar

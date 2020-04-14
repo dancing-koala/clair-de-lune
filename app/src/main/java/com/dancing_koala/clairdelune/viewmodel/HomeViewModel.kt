@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dancing_koala.clairdelune.android.AppDownloadManager
-import com.dancing_koala.clairdelune.android.BaseViewModel
 import com.dancing_koala.clairdelune.core.LockWithPicture
 import com.dancing_koala.clairdelune.core.Result
 import com.dancing_koala.clairdelune.data.LockWithPictureDataSource

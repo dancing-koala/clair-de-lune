@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.dancing_koala.clairdelune.R
-import com.dancing_koala.clairdelune.android.hide
+import com.dancing_koala.clairdelune.android.view.hide
 import com.dancing_koala.clairdelune.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_picture_info.*
 

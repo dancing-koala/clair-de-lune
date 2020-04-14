@@ -1,4 +1,4 @@
-package com.dancing_koala.clairdelune.android
+package com.dancing_koala.clairdelune.android.view
 
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
