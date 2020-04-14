@@ -20,8 +20,11 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun lockDao(): LockDao
 
     fun populateDatabase(context: Context) {
-        val calendar = Calendar.getInstance()
-        LockPolicy.setCalendarToUnlockTime(calendar)
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, 14)
+            set(Calendar.MONTH, 3)
+            LockPolicy.setCalendarToUnlockTime(this)
+        }
 
         val curatedIds = context.resources.getStringArray(R.array.picture_curated_ids)
 
