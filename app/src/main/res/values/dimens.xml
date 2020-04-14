@@ -7,5 +7,5 @@
     <dimen name="base_margin_xs">8dp</dimen>
     <dimen name="home_bottom_bar_height">56dp</dimen>
     <dimen name="picture_item_height">100dp</dimen>
-    <dimen name="home_picture_list_arrow_size">36dp</dimen>
+    <dimen name="home_picture_list_arrow_size">20dp</dimen>
 </resources>

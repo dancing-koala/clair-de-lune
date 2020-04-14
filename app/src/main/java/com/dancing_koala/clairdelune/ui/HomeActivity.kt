@@ -110,7 +110,7 @@ class HomeActivity : AppCompatActivity() {
             showPictureItems(it.map { item -> item.toPictureItem() })
         })
 
-        delayedHide(150L)
+        delayedHide(250L)
     }
 
     override fun onStart() {
@@ -190,17 +190,17 @@ class HomeActivity : AppCompatActivity() {
             homePictureListRecyclerView.adapter = null
             (homePictureListRecyclerView.parent as ViewGroup).apply {
                 removeView(homePictureListRecyclerView)
-                removeView(homePictureListArrow)
+                removeView(homePictureListIndicator)
             }
             homeMainUIGroup.referencedIds = homeMainUIGroup.referencedIds.filter {
-                it != R.id.homePictureListRecyclerView || it != R.id.homePictureListArrow
+                it != R.id.homePictureListRecyclerView
             }.toIntArray()
             return
         }
 
         homePictureListRecyclerView.apply {
             layoutManager = CenteredLayoutManager(this@HomeActivity, this.width, resources.getDimensionPixelSize(R.dimen.picture_item_height))
-            adapter = ItemAdapter(items)
+            adapter = ItemAdapter(items) { position -> smoothScrollToPosition(position) }
             addOnScrollListener(
                 SnapOnScrollListener(
                     linearSnapHelper,
@@ -209,7 +209,7 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
             lifecycleScope.launch {
-                // Workaround for a discrepency between CenteredLayoutManager & SnapHelper
+                // Workaround for a quack between CenteredLayoutManager & SnapHelper
                 delay(100)
                 fling(-minFlingVelocity, 0)
             }
@@ -234,9 +234,18 @@ class HomeActivity : AppCompatActivity() {
         val unlockedDateHumanized: String
     )
 
-    private class ItemAdapter(private val data: List<PictureItem>) : RecyclerView.Adapter<ItemAdapter.Holder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
-            Holder(LayoutInflater.from(parent.context).inflate(R.layout.item_picture_archive, parent, false))
+    private class ItemAdapter(
+        private val data: List<PictureItem>,
+        private val onClickBlock: (position: Int) -> Unit
+    ) : RecyclerView.Adapter<ItemAdapter.Holder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_picture_archive, parent, false)
+            return Holder(itemView).also { holder ->
+                itemView.setOnClickListener {
+                    onClickBlock.invoke(holder.adapterPosition)
+                }
+            }
+        }
 
         override fun getItemCount(): Int = data.size
 
@@ -251,5 +260,6 @@ class HomeActivity : AppCompatActivity() {
             val image: ImageView = itemView.itemPictureArchiveImage
             val unlockDate: TextView = itemView.itemPictureArchiveUnlockDate
         }
+
     }
 }

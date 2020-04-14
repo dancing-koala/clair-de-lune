@@ -39,8 +39,6 @@ class LocalLockDataSource(
                 it.add(Calendar.DAY_OF_MONTH, -1)
             }
 
-            it.add(Calendar.DAY_OF_MONTH, 10)
-
             LockPolicy.setCalendarToUnlockTime(it)
             it.time.time
         }

@@ -25,7 +25,7 @@
             android:id="@+id/homeMainUIGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="homeToolbar,homeBottomToolbar,homePictureListRecyclerView,homePictureListArrow" />
+            app:constraint_referenced_ids="homeToolbar,homeBottomToolbar,homePictureListRecyclerView" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/homeToolbar"
@@ -50,21 +50,22 @@
             android:id="@+id/homePictureListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/base_margin_xs"
             android:clipChildren="false"
             android:clipToPadding="false"
             app:layout_constraintBottom_toTopOf="@id/homeBottomToolbar"
             tools:layout_height="150dp"
             tools:listitem="@layout/item_picture_archive" />
 
-        <ImageView
-            android:id="@+id/homePictureListArrow"
-            android:layout_width="@dimen/home_picture_list_arrow_size"
-            android:layout_height="@dimen/home_picture_list_arrow_size"
-            android:src="@drawable/arrow_down"
-            android:tint="@color/secondaryDarkColor"
-            app:layout_constraintBottom_toTopOf="@id/homePictureListRecyclerView"
-            app:layout_constraintEnd_toEndOf="@id/homePictureListRecyclerView"
-            app:layout_constraintStart_toStartOf="@id/homePictureListRecyclerView"
+        <View
+            android:id="@+id/homePictureListIndicator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_round_stroke"
+            app:layout_constraintBottom_toBottomOf="@id/homePictureListRecyclerView"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/homePictureListRecyclerView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
