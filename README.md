@@ -1,4 +1,4 @@
-# clair-de-lune
+# Claire De Lune
 
 An android application showing a full moon every day.
 
