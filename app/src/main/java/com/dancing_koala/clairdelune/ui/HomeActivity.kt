@@ -111,11 +111,13 @@ class HomeActivity : AppCompatActivity() {
         })
 
         delayedHide(250L)
+
+        viewModel.start()
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.start()
+        homeMainImageView.resetMatrix()
     }
 
     private fun showUserProfile(userProfileUrl: String) {
@@ -143,8 +145,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showImage(url: String) {
         showLoading()
-        homeMainImageView.imageMatrix = Matrix()
-        homeMainImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        homeMainImageView.resetMatrix()
         homeMainImageView.load(url) {
             listener { _, _ ->
                 homeMainImageView.setOnTouchListener { view, event ->
@@ -226,6 +227,11 @@ class HomeActivity : AppCompatActivity() {
             pictureDownloadUrl = picture.links.download,
             unlockedDateHumanized = humanizeDate(Date(lock.unlockedAt!!))
         )
+
+    private fun ImageView.resetMatrix() {
+        imageMatrix = Matrix()
+        scaleType = ImageView.ScaleType.CENTER_INSIDE
+    }
 
     private data class PictureItem(
         val itemId: String,
