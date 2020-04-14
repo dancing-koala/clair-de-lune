@@ -2,7 +2,7 @@
 
 An android application showing a full moon every day.
 
-Disclaimer: the app is no way perfect nor optimized as hell, I made it so it works & does what it is supposed to.
+  Disclaimer: the app is no way perfect nor optimized as hell, I made it so it works & does what it is supposed to.
 
 ## Why
 
